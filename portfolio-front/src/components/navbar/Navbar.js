@@ -32,6 +32,10 @@ function Navbar() {
                 icon: <FontAwesomeIcon className="pr-2" icon={faCertificate}/>,
                 path: "/certifications"
             }])
+        } else {
+            setNavigation(() => [{
+                title: "HOME", icon: <FontAwesomeIcon className="pr-2" icon={faIdBadge}/>, path: "/home"
+            }])
         }
     }, [activeElement]);
 
@@ -76,8 +80,8 @@ function Navbar() {
                 </div>
             </div>
             <div
-                className={`flex-1 justify-self-center pb-3 mt-8 md:block md:pb-0 md:mt-0 ${state ? 'block' : 'hidden'}`}>
-                <ul className="justify-center items-center space-y-8 md:flex md:space-x-6 md:space-y-0">
+                className={`flex-1 ml-8 justify-self-start pb-3 mt-8 md:block md:pb-0 md:mt-0 ${state ? 'block' : 'hidden'}`}>
+                <ul className="justify-start items-center space-y-8 md:flex md:space-x-6 md:space-y-0">
                     {navigation.map((item, idx) => {
                         return (<li key={idx}
                                     onClick={() => handleClick(item.path)}

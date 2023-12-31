@@ -1,8 +1,11 @@
 import * as React from "react";
 import {useState} from "react";
+import {InputText} from 'primereact/inputtext';
+import type {User} from "../../auth/models/User";
 
 function Registration(props) {
     const [index, setIndex] = useState(0);
+    let [user: User, setUser] = useState(new User());
 
     const handleNext = () => {
         if (index < 5) {
@@ -20,6 +23,43 @@ function Registration(props) {
         <div className="p-card  flex p-5 w-full flex-col gap-5 items-center">
 
             {index === 0 ? (
+
+                <React.Fragment>
+                    <strong>About You</strong>
+
+                    <div className="w-full flex gap-2 flex-col">
+                        <label>Firstname</label>
+                        <InputText value={user.firstName}
+                                   onChange={(e) => setUser(u => u.firstName = e.target.value)}/>
+                    </div>
+
+                    <div className="w-full flex gap-2 flex-col">
+                        <label>Lastname</label>
+                        <InputText value={user.lastName}
+                                   onChange={(e) => setUser(u => u.lastName = e.target.value)}/>
+                    </div>
+
+                    <div className="w-full flex gap-2 flex-col">
+                        <label>Email</label>
+                        <InputText value={user.email}
+                                   onChange={(e) => setUser(u => u.email = e.target.value)}/>
+                    </div>
+
+                    <div className="w-full flex gap-2 flex-col">
+                        <label>Password</label>
+                        <InputText value={user.password}
+                                   onChange={(e) => setUser(u => u.password = e.target.value)}/>
+                    </div>
+
+                    <div className="w-full flex gap-2 flex-col">
+                        <label>About you</label>
+                        <InputText value={user.title}
+                                   onChange={(e) => setUser(u => u.title = e.target.value)}/>
+                    </div>
+
+                </React.Fragment>
+
+            ) : index === 1 ? (
 
                 <React.Fragment>
                     <strong>Experience</strong>
@@ -63,7 +103,7 @@ function Registration(props) {
                     </div>
                 </React.Fragment>
 
-            ) : index === 1 ? (
+            ) : index === 2 ? (
 
                 <React.Fragment>
                     <strong>Skills</strong>
@@ -107,7 +147,7 @@ function Registration(props) {
                     </div>
                 </React.Fragment>
 
-            ) : index === 2 ? (
+            ) : index === 3 ? (
 
                 <React.Fragment>
                     <strong>Languages</strong>
@@ -151,9 +191,7 @@ function Registration(props) {
                     </div>
                 </React.Fragment>
 
-            ) : (
-                <p>Default Hello</p>
-            )}
+            ) : (<p>Default Hello</p>)}
 
 
             <div className="w-full flex flex-row justify-between">
