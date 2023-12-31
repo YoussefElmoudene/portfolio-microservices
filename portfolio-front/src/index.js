@@ -10,13 +10,14 @@ import Certifications from "./components/certifications/Certifications";
 import Contact from "./components/contact/Contact";
 import Home from "./components/home/Home";
 import Experiences from "./components/experiences/Experiences";
+import Registration from "./components/registration/Registration";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
     <BrowserRouter>
         <App>
             <Routes>
-                <Route exact path="/" element={<Home/>}/>
+                <Route exact path="/" element={<Registration/>}/>
                 <Route path="/services" element={<Services/>}/>
                 <Route path="/experiences" element={<Experiences/>}/>
                 <Route path="/certifications" element={<Certifications/>}/>
