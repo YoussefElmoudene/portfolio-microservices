@@ -25,7 +25,8 @@ function About() {
                         </a>
                     </Link>
 
-                    <a href="https://drive.google.com/u/1/uc?id=1p7clOjoZtGrodh2D1IRfMRwD4tgC7ckh&export=download" target="_blank"
+                    <a href="https://drive.google.com/u/1/uc?id=1p7clOjoZtGrodh2D1IRfMRwD4tgC7ckh&export=download"
+                       target="_blank"
                        className="px-7 py-3 w-full bg-gray-700 text-gray-200 text-center rounded-md block sm:w-auto">
                         Download CV
                     </a>

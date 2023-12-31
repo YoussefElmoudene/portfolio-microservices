@@ -3,7 +3,7 @@ import axios from "axios";
 
 function Education() {
 
-    const  [education, setEducation] = useState([]);
+    const [education, setEducation] = useState([]);
 
     useEffect(() => {
         fetchEducation();
@@ -35,7 +35,8 @@ function Education() {
                         <div className="py-8 flex flex-wrap md:flex-nowrap">
                             <div className="md:w-64 md:mb-0 mb-6 flex-shrink-0 flex flex-col">
                                 <span className="font-semibold title-font text-white">{education.name}</span>
-                                <span className="mt-1 text-gray-600 text-sm">{new Date(exp.startDate).toLocaleDateString()} - {new Date(exp.endDate).toLocaleDateString()}</span>
+                                <span
+                                    className="mt-1 text-gray-600 text-sm">{new Date(exp.startDate).toLocaleDateString()} - {new Date(exp.endDate).toLocaleDateString()}</span>
                             </div>
                             <div className="md:flex-grow">
                                 <h2 className="text-2xl font-medium text-gray-400 title-font mb-2">{exp.school}</h2>

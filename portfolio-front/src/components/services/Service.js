@@ -1,12 +1,10 @@
 import "./service.css"
-import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
-import {faBullseye, faPaintBrush, faWrench} from "@fortawesome/free-solid-svg-icons";
 import {useEffect, useState} from "react";
 import axios from "axios";
 
 function Services() {
 
-    const  [services, setServices] = useState([]);
+    const [services, setServices] = useState([]);
 
     useEffect(() => {
         fetchServices();
@@ -65,42 +63,36 @@ function Services() {
     // ]
 
 
-    return (
-        <section className="relative py-28 bg-gray-900">
-            <div className="relative z-10 max-w-screen-xl mx-auto px-4 text-gray-300 justify-between gap-24">
+    return (<section className="relative py-28 bg-gray-900">
+        <div className="relative z-10 max-w-screen-xl mx-auto px-4 text-gray-300 justify-between gap-24">
 
-                <div className="max-w-xl pb-10">
-                    <h1 className="text-white text-3xl font-semibold sm:text-4xl">
-                        WHAT I DO ?
-                    </h1>
-                    <span className="hidden h-1 sm:block sm:h-1px sm:w-20 sm:bg-indigo-500"></span>
-                </div>
-
-                <div className="mt-12 lg:mt-0">
-                    <ul className="grid gap-8 sm:grid-cols-2">
-                        {
-                            services.map((item, idx) => (
-                                <li key={idx}
-                                    className="flex shadow-lg bg-indigo-600 hover:bg-indigo-800 cursor-pointer service__list p-2 gap-x-4">
-
-                                    <div>
-                                        <h1 className="text-gray-100 custom__title ">
-                                            {item.name}
-                                        </h1>
-                                        <p className="mt-3 item__desc">
-                                            {item.level}
-                                        </p>
-                                    </div>
-                                </li>
-                            ))
-                        }
-                    </ul>
-                </div>
+            <div className="max-w-xl pb-10">
+                <h1 className="text-white text-3xl font-semibold sm:text-4xl">
+                    WHAT I DO ?
+                </h1>
+                <span className="hidden h-1 sm:block sm:h-1px sm:w-20 sm:bg-indigo-500"></span>
             </div>
-            <div className="absolute inset-0 max-w-md mx-auto h-72 blur-[118px]"
-                 style={{background: "linear-gradient(152.92deg, rgba(192, 132, 252, 0.2) 4.54%, rgba(232, 121, 249, 0.26) 34.2%, rgba(192, 132, 252, 0.1) 77.55%)"}}></div>
-        </section>
-    )
+
+            <div className="mt-12 lg:mt-0">
+                <ul className="grid gap-8 sm:grid-cols-2">
+                    {services.map((item, idx) => (<li key={idx}
+                                                      className="flex shadow-lg bg-indigo-600 hover:bg-indigo-800 cursor-pointer service__list p-2 gap-x-4">
+
+                        <div>
+                            <h1 className="text-gray-100 custom__title ">
+                                {item.name}
+                            </h1>
+                            <p className="mt-3 item__desc">
+                                {item.level}
+                            </p>
+                        </div>
+                    </li>))}
+                </ul>
+            </div>
+        </div>
+        <div className="absolute inset-0 max-w-md mx-auto h-72 blur-[118px]"
+             style={{background: "linear-gradient(152.92deg, rgba(192, 132, 252, 0.2) 4.54%, rgba(232, 121, 249, 0.26) 34.2%, rgba(192, 132, 252, 0.1) 77.55%)"}}></div>
+    </section>)
 }
 
 export default Services;

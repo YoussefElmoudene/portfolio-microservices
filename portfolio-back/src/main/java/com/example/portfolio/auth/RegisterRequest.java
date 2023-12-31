@@ -2,8 +2,10 @@ package com.example.portfolio.auth;
 
 
 import com.example.portfolio.bean.Role;
-
-import lombok.*;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Data
 @Builder

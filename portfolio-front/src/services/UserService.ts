@@ -3,7 +3,7 @@ import {environment} from "../env/environment.js"
 
 const API_URL = environment.URL
 
-const UserService  = {
+const UserService = {
 
     find_disponible_pharmacy: async (zoneId, date) => {
         try {

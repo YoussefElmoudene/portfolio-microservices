@@ -19,7 +19,8 @@ function Contact() {
                             My Social Media
                         </h3>
                         <div className="flex flex-col gap-3">
-                            <a href="https://github.com/YoussefElmoudene" target="_blank" className="flex items-center hover:text-white hover:bg-indigo-500 p-2">
+                            <a href="https://github.com/YoussefElmoudene" target="_blank"
+                               className="flex items-center hover:text-white hover:bg-indigo-500 p-2">
                                 <svg fill="currentColor" className="w-6 h-6 m-2" xmlns="http://www.w3.org/2000/svg"
                                      width="24" height="24" viewBox="0 0 24 24">
                                     <path
@@ -27,7 +28,8 @@ function Contact() {
                                 </svg>
                                 Github
                             </a>
-                            <a  href="https://www.linkedin.com/in/youssef-elmoudene" target="_blank" className="flex items-center hover:text-white hover:bg-indigo-500 p-2">
+                            <a href="https://www.linkedin.com/in/youssef-elmoudene" target="_blank"
+                               className="flex items-center hover:text-white hover:bg-indigo-500 p-2">
                                 <svg fill="currentColor" className="w-6 h-6 m-2" xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 24 24">
                                     <path
@@ -36,7 +38,8 @@ function Contact() {
                                 Linkedin
                             </a>
 
-                            <a  href="https://www.facebook.com/" target="_blank" className="flex items-center hover:text-white hover:bg-indigo-500 p-2">
+                            <a href="https://www.facebook.com/" target="_blank"
+                               className="flex items-center hover:text-white hover:bg-indigo-500 p-2">
                                 <svg fill="currentColor" className="w-6 h-6 m-2" xmlns="http://www.w3.org/2000/svg"
                                      viewBox="0 0 24 24">
                                     <path

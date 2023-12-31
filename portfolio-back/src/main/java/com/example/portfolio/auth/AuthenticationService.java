@@ -3,12 +3,11 @@ package com.example.portfolio.auth;
 import com.example.portfolio.bean.Role;
 import com.example.portfolio.bean.User;
 import com.example.portfolio.config.JwtService;
-import com.example.portfolio.dao.UserDao;
+import com.example.portfolio.dao.*;
 import com.example.portfolio.token.Token;
 import com.example.portfolio.token.TokenRepository;
 import com.example.portfolio.token.TokenType;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -24,33 +23,62 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class AuthenticationService {
     private final UserDao repository;
+    private final SkillsDao skillsDao;
+    private final ExperienceDao experienceDao;
+    private final FormationDao formationDao;
+    private final LanguageDao languageDao;
     private final TokenRepository tokenRepository;
     private final PasswordEncoder passwordEncoder;
     private final JwtService jwtService;
     private final AuthenticationManager authenticationManager;
 
 
-    public AuthenticationResponse register(RegisterRequest request) {
+    public User register(User request) {
         var user = User.builder()
-                .firstName(request.getFirstname())
-                .lastName(request.getLastname())
-                .username(request.getUsername())
+                .firstName(request.getFirstName())
+                .lastName(request.getLastName())
+                .username(request.getEmail())
                 .email(request.getEmail())
                 .tel(request.getTel())
+                .title(request.getTitle())
+                .formations(request.getFormations())
+                .skillsList(request.getSkillsList())
+                .experiences(request.getExperiences())
+                .languages(request.getLanguages())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(String.valueOf(Role.USER_ROLE)).build();
         var savedUser = repository.save(user);
-        var jwtToken = jwtService.generateToken(user);
-        var refreshToken = jwtService.generateRefreshToken(user);
-        String userJson = new Gson().toJson(user);
+        //save skills
+        request.getSkillsList().forEach(s -> {
+            s.setUser(savedUser);
+        });
+        this.skillsDao.saveAll(request.getSkillsList());
+
+        //save formations
+        request.getFormations().forEach(s -> {
+            s.setUser(savedUser);
+        });
+        this.formationDao.saveAll(request.getFormations());
+
+        //save exps
+        request.getExperiences().forEach(s -> {
+            s.setUser(savedUser);
+        });
+        this.experienceDao.saveAll(request.getExperiences());
+
+        //save languages
+        request.getLanguages().forEach(s -> {
+            s.setUser(savedUser);
+        });
+        this.languageDao.saveAll(request.getLanguages());
+        var jwtToken = jwtService.generateToken(savedUser);
+        var refreshToken = jwtService.generateRefreshToken(savedUser);
         saveUserToken(savedUser, jwtToken);
-        return AuthenticationResponse.builder().accessToken(jwtToken)
-                .user(userJson)
-                .refreshToken(refreshToken).build();
+        return savedUser;
     }
 
 
-    public AuthenticationResponse authenticate(AuthenticationRequest request) {
+    public User authenticate(AuthenticationRequest request) {
         ObjectMapper objectMapper = new ObjectMapper();
         authenticationManager.authenticate(new UsernamePasswordAuthenticationToken(request.getEmail(), request.getPassword()));
         User user = repository.findByEmail(request.getEmail()).orElseThrow();
@@ -58,13 +86,7 @@ public class AuthenticationService {
         var refreshToken = jwtService.generateRefreshToken(user);
         revokeAllUserTokens(user);
         saveUserToken(user, jwtToken);
-
-        // Convert the object to a JSON string
-        String userJson = new Gson().toJson(user);
-        System.out.println(userJson);
-        return AuthenticationResponse.builder().accessToken(jwtToken)
-                .user(userJson)
-                .refreshToken(refreshToken).build();
+        return user;
     }
 
     private void saveUserToken(User user, String jwtToken) {

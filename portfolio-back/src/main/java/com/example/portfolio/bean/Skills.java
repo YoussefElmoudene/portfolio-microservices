@@ -1,6 +1,6 @@
 package com.example.portfolio.bean;
 
-import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.annotation.JsonProperty;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,6 +17,6 @@ public class Skills {
     private String name;
     private String level;
     @ManyToOne
-    @JsonIgnore
+    @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     private User user;
 }

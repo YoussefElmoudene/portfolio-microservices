@@ -1,5 +1,6 @@
 package com.example.portfolio.auth;
 
+import com.example.portfolio.bean.User;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
@@ -19,13 +20,12 @@ public class AuthenticationController {
     private AuthenticationService service;
 
     @PostMapping("/register")
-    public ResponseEntity<AuthenticationResponse> register(@RequestBody RegisterRequest request) {
-        System.out.println(request.getEmail());
+    public ResponseEntity<User> register(@RequestBody User request) {
         return ResponseEntity.ok(service.register(request));
     }
 
     @PostMapping("/authenticate")
-    public ResponseEntity<AuthenticationResponse> authenticate(@RequestBody AuthenticationRequest request) {
+    public ResponseEntity<User> authenticate(@RequestBody AuthenticationRequest request) {
         return ResponseEntity.ok(service.authenticate(request));
     }
 

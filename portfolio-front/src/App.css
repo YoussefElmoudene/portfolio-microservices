@@ -39,3 +39,7 @@ ul.list__expert {
 .cert__item {
     margin: 20px;
 }
+
+button {
+    max-height: 40px !important;
+}

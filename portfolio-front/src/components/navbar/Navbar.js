@@ -8,8 +8,8 @@ import {Link} from "react-router-dom";
 import {getUser, logout} from "../../auth/auth";
 import {isUserLoggedIn} from "../../auth/utils";
 import {Button} from 'primereact/button';
-import type {Navigation} from "../../auth/models/navigation";
-import type {User} from "../../auth/models/User";
+import type {Navigation} from "../../models/navigation";
+import type {User} from "../../models/user";
 
 function Navbar() {
     const user: User = getUser()
