@@ -1,11 +1,25 @@
 import * as React from "react";
 import {useState} from "react";
 import {InputText} from 'primereact/inputtext';
-import type {User} from "../../auth/models/User";
+
+export type UserType = {
+    id: number,
+    firstName: string,
+    lastName: string,
+    email: string,
+    password: string,
+    username: string,
+    languages: any,
+    experiences: any,
+    formations: any,
+    skillsList: any,
+    role: string,
+    title: string
+}
 
 function Registration(props) {
     const [index, setIndex] = useState(0);
-    let [user: User, setUser] = useState(new User());
+    let [user, setUser] = useState(UserType);
 
     const handleNext = () => {
         if (index < 5) {
@@ -30,32 +44,36 @@ function Registration(props) {
                     <div className="w-full flex gap-2 flex-col">
                         <label>Firstname</label>
                         <InputText value={user.firstName}
-                                   onChange={(e) => setUser(u => u.firstName = e.target.value)}/>
+                                   onChange={(e) => setUser(
+                                       (prevFormData) => ({
+                                           ...prevFormData,
+                                           firstName: e.target.value
+                                       }))}/>
                     </div>
 
-                    <div className="w-full flex gap-2 flex-col">
-                        <label>Lastname</label>
-                        <InputText value={user.lastName}
-                                   onChange={(e) => setUser(u => u.lastName = e.target.value)}/>
-                    </div>
+                    {/*<div className="w-full flex gap-2 flex-col">*/}
+                    {/*    <label>Lastname</label>*/}
+                    {/*    <InputText value={user.lastName}*/}
+                    {/*               onChange={(e) => setUser({...user, lastName: e.target.value})}/>*/}
+                    {/*</div>*/}
 
-                    <div className="w-full flex gap-2 flex-col">
-                        <label>Email</label>
-                        <InputText value={user.email}
-                                   onChange={(e) => setUser(u => u.email = e.target.value)}/>
-                    </div>
+                    {/*<div className="w-full flex gap-2 flex-col">*/}
+                    {/*    <label>Email</label>*/}
+                    {/*    <InputText value={user.email}*/}
+                    {/*               onChange={(e) => setUser({...user, email: e.target.value})}/>*/}
+                    {/*</div>*/}
 
-                    <div className="w-full flex gap-2 flex-col">
-                        <label>Password</label>
-                        <InputText value={user.password}
-                                   onChange={(e) => setUser(u => u.password = e.target.value)}/>
-                    </div>
+                    {/*<div className="w-full flex gap-2 flex-col">*/}
+                    {/*    <label>Password</label>*/}
+                    {/*    <InputText value={user.password}*/}
+                    {/*               onChange={(e) => setUser({...user, password: e.target.value})}/>*/}
+                    {/*</div>*/}
 
-                    <div className="w-full flex gap-2 flex-col">
-                        <label>About you</label>
-                        <InputText value={user.title}
-                                   onChange={(e) => setUser(u => u.title = e.target.value)}/>
-                    </div>
+                    {/*<div className="w-full flex gap-2 flex-col">*/}
+                    {/*    <label>About you</label>*/}
+                    {/*    <InputText value={user.title}*/}
+                    {/*               onChange={(e) => setUser({...user, title: e.target.value})}/>*/}
+                    {/*</div>*/}
 
                 </React.Fragment>
 

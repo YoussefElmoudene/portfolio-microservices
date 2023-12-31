@@ -11,13 +11,4 @@ export class User {
     skillsList: any
     role: string
     title: string
-
-    constructor() {
-        this.firstName = "";
-        this.lastName = "";
-        this.email = "";
-        this.password = "";
-        this.title = "";
-        // Add other properties as needed
-    }
 }
