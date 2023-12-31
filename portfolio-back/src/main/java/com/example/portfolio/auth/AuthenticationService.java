@@ -1,19 +1,19 @@
 package com.example.portfolio.auth;
 
-import com.example.portfolio.dao.UserDao;
+import com.example.portfolio.bean.User;
 import com.example.portfolio.config.JwtService;
+import com.example.portfolio.dao.UserDao;
 import com.example.portfolio.token.Token;
 import com.example.portfolio.token.TokenRepository;
 import com.example.portfolio.token.TokenType;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import com.google.gson.Gson;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpHeaders;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-import com.example.portfolio.bean.User;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -38,15 +38,15 @@ public class AuthenticationService {
                 .tel(request.getTel())
                 .password(passwordEncoder.encode(request.getPassword()))
                 .role(request.getRole()).build();
-            var savedUser = repository.save(user);
-            var jwtToken = jwtService.generateToken(user);
-            var refreshToken = jwtService.generateRefreshToken(user);
-            String jsonString = String.valueOf(user.getRole());
-            saveUserToken(savedUser, jwtToken);
-            return AuthenticationResponse.builder().accessToken(jwtToken)
-                    .role(jsonString)
-                    .refreshToken(refreshToken).build();
-        }
+        var savedUser = repository.save(user);
+        var jwtToken = jwtService.generateToken(user);
+        var refreshToken = jwtService.generateRefreshToken(user);
+        String userJson = new Gson().toJson(user);
+        saveUserToken(savedUser, jwtToken);
+        return AuthenticationResponse.builder().accessToken(jwtToken)
+                .user(userJson)
+                .refreshToken(refreshToken).build();
+    }
 
 
     public AuthenticationResponse authenticate(AuthenticationRequest request) {
@@ -59,16 +59,16 @@ public class AuthenticationService {
         saveUserToken(user, jwtToken);
 
         // Convert the object to a JSON string
-        String jsonString = String.valueOf(user.getRole());
-        System.out.println(jsonString);
+        String userJson = new Gson().toJson(user);
+        System.out.println(userJson);
         return AuthenticationResponse.builder().accessToken(jwtToken)
-                .role(jsonString)
+                .user(userJson)
                 .refreshToken(refreshToken).build();
     }
 
     private void saveUserToken(User user, String jwtToken) {
         var token = Token.builder().user(user).token(jwtToken).tokenType(TokenType.TEST).expired(false).revoked(false).build();
-       // tokenRepository.save(token);
+        // tokenRepository.save(token);
     }
 
     private void revokeAllUserTokens(User user) {
