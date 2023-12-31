@@ -11,6 +11,7 @@ import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/formation")
+@CrossOrigin
 public class FormationController {
 
     @Autowired

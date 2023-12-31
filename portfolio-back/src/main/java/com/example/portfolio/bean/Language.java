@@ -1,6 +1,7 @@
 package com.example.portfolio.bean;
 
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -17,5 +18,6 @@ public class Language {
     private String name;
     private String level;
     @ManyToOne
+    @JsonIgnore
     private User user;
 }
