@@ -1,25 +1,33 @@
 import * as React from "react";
 import {useState} from "react";
 import {InputText} from 'primereact/inputtext';
-
-export type UserType = {
-    id: number,
-    firstName: string,
-    lastName: string,
-    email: string,
-    password: string,
-    username: string,
-    languages: any,
-    experiences: any,
-    formations: any,
-    skillsList: any,
-    role: string,
-    title: string
-}
+import axios from "axios";
 
 function Registration(props) {
     const [index, setIndex] = useState(0);
-    let [user, setUser] = useState(UserType);
+    const [error, setError] = useState('');
+    const [email, setEmail] = useState('');
+    const [password, setPassword] = useState('');
+    const [username, setUsername] = useState('');
+    const [firstname, setFirstName] = useState("");
+    const [lastname, setLastName] = useState("");
+
+    const handleSignUp = (event) => {
+        event.preventDefault();
+
+        axios.post('https://pharmacy-location.up.railway.app/api/auth/register', {
+            username: username,
+            password: password,
+            firstname: firstname,
+            lastname: lastname,
+            role: 'USER_ROLE',
+            email: email
+        }).then(response => {
+            window.location = '/';
+        }).catch(error => {
+            setError(error.response.data.message);
+        });
+    };
 
     const handleNext = () => {
         if (index < 5) {
@@ -42,37 +50,33 @@ function Registration(props) {
                     <strong>About You</strong>
 
                     <div className="w-full flex gap-2 flex-col">
-                        <label>Firstname</label>
-                        <InputText value={user.firstName}
-                                   onChange={(e) => setUser(
-                                       (prevFormData) => ({
-                                           ...prevFormData,
-                                           firstName: e.target.value
-                                       }))}/>
+                        <label>First Name</label>
+                        <InputText value={firstname}
+                                   onChange={event => setFirstName(event.target.value)}/>
                     </div>
 
-                    {/*<div className="w-full flex gap-2 flex-col">*/}
-                    {/*    <label>Lastname</label>*/}
-                    {/*    <InputText value={user.lastName}*/}
-                    {/*               onChange={(e) => setUser({...user, lastName: e.target.value})}/>*/}
-                    {/*</div>*/}
+                    <div className="w-full flex gap-2 flex-col">
+                        <label>Last Name</label>
+                        <InputText value={lastname}
+                                   onChange={event => setLastName(event.target.value)}/>
+                    </div>
 
-                    {/*<div className="w-full flex gap-2 flex-col">*/}
-                    {/*    <label>Email</label>*/}
-                    {/*    <InputText value={user.email}*/}
-                    {/*               onChange={(e) => setUser({...user, email: e.target.value})}/>*/}
-                    {/*</div>*/}
+                    <div className="w-full flex gap-2 flex-col">
+                        <label>Email</label>
+                        <InputText value={email}
+                                   onChange={event => setEmail(event.target.value)}/>
+                    </div>
 
-                    {/*<div className="w-full flex gap-2 flex-col">*/}
-                    {/*    <label>Password</label>*/}
-                    {/*    <InputText value={user.password}*/}
-                    {/*               onChange={(e) => setUser({...user, password: e.target.value})}/>*/}
-                    {/*</div>*/}
+                    <div className="w-full flex gap-2 flex-col">
+                        <label>Password</label>
+                        <InputText value={password}
+                                   onChange={event => setPassword(event.target.value)}/>
+                    </div>
 
                     {/*<div className="w-full flex gap-2 flex-col">*/}
                     {/*    <label>About you</label>*/}
                     {/*    <InputText value={user.title}*/}
-                    {/*               onChange={(e) => setUser({...user, title: e.target.value})}/>*/}
+                    {/*               onChange={(e) => setUser(u => u.title = e.target.value)}/>*/}
                     {/*</div>*/}
 
                 </React.Fragment>

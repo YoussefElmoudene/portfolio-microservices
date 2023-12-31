@@ -28,9 +28,9 @@ function Navbar() {
             }, {
                 title: "EXPERIENCES", icon: <FontAwesomeIcon className="pr-2" icon={faBriefcase}/>, path: "/experiences"
             }, {
-                title: "CERTIFICATIONS",
+                title: "EDUCATION",
                 icon: <FontAwesomeIcon className="pr-2" icon={faCertificate}/>,
-                path: "/certifications"
+                path: "/education"
             }])
         } else {
             setNavigation(() => [{

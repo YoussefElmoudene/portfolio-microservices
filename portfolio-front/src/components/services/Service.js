@@ -1,49 +1,68 @@
 import "./service.css"
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faBullseye, faPaintBrush, faWrench} from "@fortawesome/free-solid-svg-icons";
+import {useEffect, useState} from "react";
+import axios from "axios";
 
 function Services() {
 
-    const features = [
-        {
-            icon: <FontAwesomeIcon icon={faPaintBrush}/>,
-            title: "DESIGNING SOFTWARE",
-            desc: "design software by analyzing user requirements, creating software specifications, and designing the software architecture."
-        },
+    const  [services, setServices] = useState([]);
 
+    useEffect(() => {
+        fetchServices();
 
-        {
-            icon: <FontAwesomeIcon icon={faWrench}/>,
-            title: "DEVELOPING SOFTWARE",
-            desc: "write clear code to develop the software. This includes programming, debugging, and testing"
-        },
+    });
 
-        {
-            icon:
-                <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                     stroke="currentColor" className="w-6 h-6">
-                    <path strokeLinecap="round" strokeLinejoin="round"
-                          d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"/>
-                </svg>,
-            title: "TESTING SOFTWARE",
-            desc: "test the software to ensure it is functional, reliable, and meets user requirements. This includes unit testing, integration testing, and system testing."
-        },
+    const fetchServices = async () => {
+        try {
+            let url = 'http://localhost:8080/api/skills/all';
+            const response = await axios.get(url);
+            setServices(response.data);
+        } catch (error) {
+            console.error('Error fetching experiences:', error);
+        }
+    };
 
-        {
-            icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
-                       stroke="currentColor" className="w-6 h-6">
-                <path strokeLinecap="round" strokeLinejoin="round"
-                      d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
-            </svg>,
-            title: "MAINTAINING SOFTWARE",
-            desc: "maintain software by fixing bugs, updating features, and adding new functionality. This includes updating software documentation and providing technical support to users."
-        },
-        {
-            icon: <FontAwesomeIcon icon={faBullseye}/>,
-            title: "SEO MARKETING",
-            desc: "improving the quality and quantity of website traffic to a website or a web page from search engines."
-        },
-    ]
+    // const features = [
+    //     {
+    //         icon: <FontAwesomeIcon icon={faPaintBrush}/>,
+    //         title: "DESIGNING SOFTWARE",
+    //         desc: "design software by analyzing user requirements, creating software specifications, and designing the software architecture."
+    //     },
+    //
+    //
+    //     {
+    //         icon: <FontAwesomeIcon icon={faWrench}/>,
+    //         title: "DEVELOPING SOFTWARE",
+    //         desc: "write clear code to develop the software. This includes programming, debugging, and testing"
+    //     },
+    //
+    //     {
+    //         icon:
+    //             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+    //                  stroke="currentColor" className="w-6 h-6">
+    //                 <path strokeLinecap="round" strokeLinejoin="round"
+    //                       d="M6.429 9.75L2.25 12l4.179 2.25m0-4.5l5.571 3 5.571-3m-11.142 0L2.25 7.5 12 2.25l9.75 5.25-4.179 2.25m0 0L21.75 12l-4.179 2.25m0 0l4.179 2.25L12 21.75 2.25 16.5l4.179-2.25m11.142 0l-5.571 3-5.571-3"/>
+    //             </svg>,
+    //         title: "TESTING SOFTWARE",
+    //         desc: "test the software to ensure it is functional, reliable, and meets user requirements. This includes unit testing, integration testing, and system testing."
+    //     },
+    //
+    //     {
+    //         icon: <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5}
+    //                    stroke="currentColor" className="w-6 h-6">
+    //             <path strokeLinecap="round" strokeLinejoin="round"
+    //                   d="M3.75 13.5l10.5-11.25L12 10.5h8.25L9.75 21.75 12 13.5H3.75z"/>
+    //         </svg>,
+    //         title: "MAINTAINING SOFTWARE",
+    //         desc: "maintain software by fixing bugs, updating features, and adding new functionality. This includes updating software documentation and providing technical support to users."
+    //     },
+    //     {
+    //         icon: <FontAwesomeIcon icon={faBullseye}/>,
+    //         title: "SEO MARKETING",
+    //         desc: "improving the quality and quantity of website traffic to a website or a web page from search engines."
+    //     },
+    // ]
 
 
     return (
@@ -60,19 +79,16 @@ function Services() {
                 <div className="mt-12 lg:mt-0">
                     <ul className="grid gap-8 sm:grid-cols-2">
                         {
-                            features.map((item, idx) => (
+                            services.map((item, idx) => (
                                 <li key={idx}
                                     className="flex shadow-lg bg-indigo-600 hover:bg-indigo-800 cursor-pointer service__list p-2 gap-x-4">
-                                    <div
-                                        className="flex-none w-12 h-12 bg-gray-900 text-cyan-400 rounded-lg flex items-center justify-center">
-                                        {item.icon}
-                                    </div>
+
                                     <div>
                                         <h1 className="text-gray-100 custom__title ">
-                                            {item.title}
+                                            {item.name}
                                         </h1>
                                         <p className="mt-3 item__desc">
-                                            {item.desc}
+                                            {item.level}
                                         </p>
                                     </div>
                                 </li>

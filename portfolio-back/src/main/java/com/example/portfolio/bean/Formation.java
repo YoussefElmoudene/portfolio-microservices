@@ -1,5 +1,6 @@
 package com.example.portfolio.bean;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -20,5 +21,6 @@ public class Formation {
     private Date startDate;
     private Date endDate;
     @ManyToOne
+    @JsonIgnore
     private User user;
 }
