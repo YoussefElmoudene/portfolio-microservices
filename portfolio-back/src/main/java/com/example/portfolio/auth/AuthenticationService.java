@@ -1,5 +1,6 @@
 package com.example.portfolio.auth;
 
+import com.example.portfolio.bean.Role;
 import com.example.portfolio.bean.User;
 import com.example.portfolio.config.JwtService;
 import com.example.portfolio.dao.UserDao;
@@ -37,7 +38,7 @@ public class AuthenticationService {
                 .email(request.getEmail())
                 .tel(request.getTel())
                 .password(passwordEncoder.encode(request.getPassword()))
-                .role(request.getRole()).build();
+                .role(String.valueOf(Role.USER_ROLE)).build();
         var savedUser = repository.save(user);
         var jwtToken = jwtService.generateToken(user);
         var refreshToken = jwtService.generateRefreshToken(user);

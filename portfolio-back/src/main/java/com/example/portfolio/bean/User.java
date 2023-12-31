@@ -26,6 +26,7 @@ public class User implements UserDetails {
     private String password;
     private String username;
     private String tel;
+    private String title;
     @OneToMany(mappedBy = "user")
     private List<Language> languages;
     @OneToMany(mappedBy = "user")
@@ -34,14 +35,12 @@ public class User implements UserDetails {
     private List<Formation> formations;
     @OneToMany(mappedBy = "user")
     private List<Skills> skillsList;
-    @Enumerated(EnumType.STRING)
-    private Role role;
+    private String role;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of(new SimpleGrantedAuthority(role.name()));
+        return List.of(new SimpleGrantedAuthority(role));
     }
-
 
 
     @Override

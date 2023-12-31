@@ -1,6 +1,7 @@
 import axios from 'axios'
 import jwtDecode from 'jwt-decode'
 import {environment} from "../env/environment";
+import type {User} from "./models/User";
 
 const API_URL = environment.URL + 'api/auth'
 const setAuthToken = token => {
@@ -31,9 +32,9 @@ const isTokenExpired = token => {
 const login = async (email, password) => {
     const response = await axios.post(`${API_URL}/authenticate`, {email, password})
     console.log(response)
-    localStorage.setItem('user', response.user)
-    localStorage.setItem('token', response.accessToken)
-    window.location.href = '/home'
+    localStorage.setItem('user', response?.data?.user)
+    localStorage.setItem('token', response?.data?.access_token)
+    window.location.href = '/about-me'
 }
 
 const register = async (name, email, password) => {
@@ -42,10 +43,13 @@ const register = async (name, email, password) => {
 
 const logout = () => {
     localStorage.removeItem('token')
+    localStorage.removeItem('user')
     setAuthToken(null)
+    window.location.href = '/login'
 }
 
 const getAuthToken = () => localStorage.getItem('token')
+const getUser: User = () => JSON.parse(localStorage.getItem('user'))
 
 const isAuthenticated = () => {
     const token = getAuthToken()
@@ -53,5 +57,13 @@ const isAuthenticated = () => {
 }
 
 export {
-    setAuthToken, getTokenExpirationDate, isTokenExpired, login, register, logout, getAuthToken, isAuthenticated
+    setAuthToken,
+    getUser,
+    getTokenExpirationDate,
+    isTokenExpired,
+    login,
+    register,
+    logout,
+    getAuthToken,
+    isAuthenticated
 }

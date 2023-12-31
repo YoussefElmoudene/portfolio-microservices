@@ -1,6 +1,8 @@
 import * as React from "react";
+import {getUser} from "../../auth/auth";
 
 function Home(props) {
+    const user = getUser()
     return (
         <div className="bg-white flex flex-col gap-2 items-start">
             <div

@@ -12,6 +12,7 @@ import Home from "./components/home/Home";
 import Experiences from "./components/experiences/Experiences";
 import Registration from "./components/registration/Registration";
 import Login from "./components/auth/login/login";
+import About from "./components/about/About";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 root.render(
@@ -21,6 +22,7 @@ root.render(
                 <Route exact path="/home" element={<Home/>}/>
                 <Route exact path="/register" element={<Registration/>}/>
                 <Route exact path="/login" element={<Login/>}/>
+                <Route path="/about-me" element={<About/>}/>
                 <Route path="/services" element={<Services/>}/>
                 <Route path="/experiences" element={<Experiences/>}/>
                 <Route path="/certifications" element={<Certifications/>}/>

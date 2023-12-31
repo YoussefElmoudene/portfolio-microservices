@@ -1,5 +1,6 @@
 package com.example.portfolio.bean;
 
 public enum Role {
-    ADMIN,
+    ADMIN_ROLE,
+    USER_ROLE,
 }
