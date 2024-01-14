@@ -1,5 +1,5 @@
 import * as React from "react";
-import {useState} from "react";
+import {useRef, useState} from "react";
 import {InputText} from 'primereact/inputtext';
 import {register} from "../../auth/auth";
 import {User} from "../../models/user";
@@ -9,6 +9,7 @@ import {Skill} from "../../models/skills";
 import {Language} from "../../models/language";
 import {InputTextarea} from 'primereact/inputtextarea';
 import {Button} from 'primereact/button';
+import { Toast } from 'primereact/toast';
 
 function Registration(props) {
     let [index, setIndex] = useState(0);
@@ -17,6 +18,7 @@ function Registration(props) {
     let [experience, setExperience] = useState(new Experience());
     let [skill, setSkill] = useState(new Skill());
     let [language, setLanguage] = useState(new Language());
+    const toast = useRef(null);
 
     // Function to handle form input changes for user
     const handleInputChange = (event) => {
@@ -67,14 +69,27 @@ function Registration(props) {
     }
 
     const saveExp = () => {
-        if (!user?.experiences) {
-            user.experiences = []
+
+        if (!experience.name || !experience.company || !experience.start || !experience.end) {
+            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.' });
+            return;
         }
-        user.experiences.push({...experience})
-        setExperience(new Experience())
-        console.log(user)
+
+        if (!user?.experiences) {
+            user.experiences = [];
+        }
+
+        user.experiences.push({ ...experience });
+        setExperience(new Experience());
+        console.log(user);
     };
     const saveLanguage = () => {
+
+        if (!language.name || !language.level ) {
+            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.' });
+            return;
+        }
+
         if (!user?.languages) {
             user.languages = []
         }
@@ -83,6 +98,13 @@ function Registration(props) {
         console.log(user)
     };
     const saveSkills = () => {
+
+        if (!skill.name || !skill.level ) {
+            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.' });
+            return;
+        }
+
+
         if (!user?.skillsList) {
             user.skillsList = []
         }
@@ -91,6 +113,13 @@ function Registration(props) {
         console.log(user)
     };
     const saveFormation = () => {
+
+        if (!formation.name || !formation.company || !formation.start || !formation.end) {
+            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.' });
+            return;
+        }
+
+
         if (!user?.formations) {
             user.formations = []
         }
@@ -101,11 +130,26 @@ function Registration(props) {
 
 
     const handleNext = () => {
-        console.log(user)
         if (index < 4) {
+            // Check for empty fields and valid email format on the first page
+            if (index === 0) {
+                if (!user.firstName || !user.lastName || !user.email || !user.password || !user.title) {
+                    toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.' });
+                    return;
+                }
+
+                // Check for valid email format
+                const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+                if (!emailRegex.test(user.email)) {
+                    toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please enter a valid email address.' });
+                    return;
+                }
+            }
+
             setIndex(index + 1);
         }
     };
+
 
     const handlePrev = () => {
         if (index > 0) {
@@ -306,6 +350,9 @@ function Registration(props) {
                     {" "}
                     Next
                 </button>
+
+                <Toast ref={toast} />
+
             </div>
 
         </div>
