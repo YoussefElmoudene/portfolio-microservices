@@ -9,7 +9,7 @@ import {Skill} from "../../models/skills";
 import {Language} from "../../models/language";
 import {InputTextarea} from 'primereact/inputtextarea';
 import {Button} from 'primereact/button';
-import { Toast } from 'primereact/toast';
+import {Toast} from 'primereact/toast';
 
 function Registration(props) {
     let [index, setIndex] = useState(0);
@@ -71,7 +71,13 @@ function Registration(props) {
     const saveExp = () => {
 
         if (!experience.name || !experience.company || !experience.start || !experience.end) {
-            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.' });
+            toast.current.show({severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.'});
+            return;
+        }
+        if (experience?.start >= experience.end) {
+            toast.current.show({
+                severity: 'warn', summary: 'Warning', detail: 'End time should be greater than start time.'
+            });
             return;
         }
 
@@ -79,14 +85,14 @@ function Registration(props) {
             user.experiences = [];
         }
 
-        user.experiences.push({ ...experience });
+        user.experiences.push({...experience});
         setExperience(new Experience());
         console.log(user);
     };
     const saveLanguage = () => {
 
-        if (!language.name || !language.level ) {
-            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.' });
+        if (!language.name || !language.level) {
+            toast.current.show({severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.'});
             return;
         }
 
@@ -99,8 +105,8 @@ function Registration(props) {
     };
     const saveSkills = () => {
 
-        if (!skill.name || !skill.level ) {
-            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.' });
+        if (!skill.name || !skill.level) {
+            toast.current.show({severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.'});
             return;
         }
 
@@ -115,7 +121,7 @@ function Registration(props) {
     const saveFormation = () => {
 
         if (!formation.name || !formation.company || !formation.start || !formation.end) {
-            toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.' });
+            toast.current.show({severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.'});
             return;
         }
 
@@ -134,14 +140,29 @@ function Registration(props) {
             // Check for empty fields and valid email format on the first page
             if (index === 0) {
                 if (!user.firstName || !user.lastName || !user.email || !user.password || !user.title) {
-                    toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.' });
+                    toast.current.show({
+                        severity: 'warn', summary: 'Warning', detail: 'Please fill in all required fields.'
+                    });
                     return;
                 }
 
                 // Check for valid email format
                 const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
                 if (!emailRegex.test(user.email)) {
-                    toast.current.show({ severity: 'warn', summary: 'Warning', detail: 'Please enter a valid email address.' });
+                    toast.current.show({
+                        severity: 'warn', summary: 'Warning', detail: 'Please enter a valid email address.'
+                    });
+                    return;
+                }
+
+                // Check for valid password format
+                const passwordRegex = /^(?=.*[0-9])(?=.*[!@#$%^&*])[a-zA-Z0-9!@#$%^&*]{8,}$/;
+                if (!passwordRegex.test(user.password)) {
+                    toast.current.show({
+                        severity: 'warn',
+                        summary: 'Warning',
+                        detail: 'Please enter a valid password. It must be at least 8 characters long and include ' + 'at least one digit and one special character.'
+                    });
                     return;
                 }
             }
@@ -291,17 +312,18 @@ function Registration(props) {
 
             ) : (<React.Fragment>
                 <strong className="col-span-2 text-center w-full">Formation</strong>
-                <div className="w-full flex gap-2 flex-col">
-                    <label>School name</label>
-                    <InputText className="p-inputtext-sm" value={formation.name}
-                               name="name"
-                               onChange={handleFormationInputChange}/>
-                </div>
 
                 <div className="w-full gap-2 flex flex-col">
                     <label>The school</label>
                     <InputText className="p-inputtext-sm" value={formation.school}
                                name="school"
+                               onChange={handleFormationInputChange}/>
+                </div>
+
+                <div className="w-full flex gap-2 flex-col">
+                    <label>Formation name</label>
+                    <InputText className="p-inputtext-sm" value={formation.name}
+                               name="name"
                                onChange={handleFormationInputChange}/>
                 </div>
 
@@ -351,7 +373,7 @@ function Registration(props) {
                     Next
                 </button>
 
-                <Toast ref={toast} />
+                <Toast ref={toast}/>
 
             </div>
 
