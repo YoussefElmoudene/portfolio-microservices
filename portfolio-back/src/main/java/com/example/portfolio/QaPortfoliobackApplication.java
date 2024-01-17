@@ -1,7 +1,8 @@
 package com.example.portfolio;
 
 import com.example.portfolio.auth.AuthenticationService;
-import com.example.portfolio.auth.RegisterRequest;
+import com.example.portfolio.bean.Role;
+import com.example.portfolio.bean.User;
 import jakarta.annotation.PostConstruct;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -17,15 +18,15 @@ public class QaPortfoliobackApplication {
         SpringApplication.run(QaPortfoliobackApplication.class, args);
     }
 
-    @PostConstruct
+//    @PostConstruct
     public void create() {
-        RegisterRequest user = new RegisterRequest();
+        User user = new User();
         user.setEmail("admin@gmail.com");
         user.setUsername("admin@gmail.com");
-        user.setFirstname("admin");
-        user.setLastname("admin");
+        user.setFirstName("admin");
+        user.setLastName("admin");
         user.setPassword("admin");
-//        authenticationService.register(user);
+        user.setRole(Role.ADMIN_ROLE.toString());
+        authenticationService.register(user);
     }
-
 }

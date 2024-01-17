@@ -67,6 +67,10 @@ function Registration(props) {
     }
 
     const saveExp = () => {
+        if (experience?.start > experience.end) {
+            alert('end time should be greater than start time ');
+            return
+        }
         if (!user?.experiences) {
             user.experiences = []
         }
@@ -74,6 +78,7 @@ function Registration(props) {
         setExperience(new Experience())
         console.log(user)
     };
+
     const saveLanguage = () => {
         if (!user?.languages) {
             user.languages = []
@@ -195,7 +200,8 @@ function Registration(props) {
                     </div>
 
                     <div className="w-full flex items-center justify-center col-span-2">
-                        <Button onClick={saveExp} label="add" icon="pi pi-check"/>
+                        <Button disabled={experience?.start > experience?.end}
+                                onClick={saveExp} label="add" icon="pi pi-check"/>
                     </div>
                 </React.Fragment>
 
@@ -247,12 +253,6 @@ function Registration(props) {
 
             ) : (<React.Fragment>
                 <strong className="col-span-2 text-center w-full">Formation</strong>
-                <div className="w-full flex gap-2 flex-col">
-                    <label>School name</label>
-                    <InputText className="p-inputtext-sm" value={formation.name}
-                               name="name"
-                               onChange={handleFormationInputChange}/>
-                </div>
 
                 <div className="w-full gap-2 flex flex-col">
                     <label>The school</label>
@@ -260,6 +260,14 @@ function Registration(props) {
                                name="school"
                                onChange={handleFormationInputChange}/>
                 </div>
+
+                <div className="w-full flex gap-2 flex-col">
+                    <label>Sector or Option</label>
+                    <InputText className="p-inputtext-sm" value={formation.name}
+                               name="name"
+                               onChange={handleFormationInputChange}/>
+                </div>
+
 
                 <div className="w-full gap-2 flex flex-col">
                     <label>Start</label>
@@ -299,7 +307,7 @@ function Registration(props) {
 
 
                 <button
-                    disabled={index === 4}
+                    hidden={index === 1 && (experience?.start > experience?.end)}
                     onClick={handleNext}
                     className="text-white disabled:bg-gray-400 disabled:border-0 text-md font-medium whitespace-nowrap bg-violet-500 self-stretch justify-center items-center
                                  mt-10 px-16 py-2 rounded-3xl border-2 border-solid border-violet-500 max-md:px-5">
